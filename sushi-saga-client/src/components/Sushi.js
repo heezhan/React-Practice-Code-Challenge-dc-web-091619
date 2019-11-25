@@ -1,23 +1,32 @@
 import React, { Fragment } from 'react'
 
 const Sushi = (props) => {
+
+  const {id, name, img_url, price} = props.sushiObj
+
+  let getImage = (url) => {
+    let newUrl
+    if (url.includes("imgur")) {
+      newUrl = require('../assets/RJGr3Xs.png')
+    } else {
+      newUrl = require(`../assets/sushi-slice_${url.split("_")[1]}`)
+    }
+    return newUrl
+  }
+
   return (
     <div className="sushi">
-      <div className="plate" 
-           onClick={/* Give me a callback! */ null}>
+      <div className="plate" onClick={() => props.onEatSushi(props.sushiObj)}>
         { 
-          /* Tell me if this sushi has been eaten! */ 
-          true ?
-            null
-          :
-            <img src={/* Give me an image source! */} width="100%" />
+          props.eatenSushi.includes(props.sushiObj) ? (null) : (<img src={getImage(img_url)} alt={""} width="100%" />)
         }
       </div>
       <h4 className="sushi-details">
-        {/* Give me a name! */} - ${/* Give me a price! */}
+        {name} - ${price}
       </h4>
     </div>
   )
 }
 
 export default Sushi
+
